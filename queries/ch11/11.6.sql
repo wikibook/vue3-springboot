@@ -1,0 +1,1 @@
+ALTER TABLE members MODIFY login_pw char(44) NOT NULL;

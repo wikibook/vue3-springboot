@@ -1,0 +1,1 @@
+ALTER TABLE members ADD login_pw_salt char(16) NOT NULL after login_pw;

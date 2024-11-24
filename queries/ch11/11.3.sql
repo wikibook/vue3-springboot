@@ -1,0 +1,1 @@
+ALTER TABLE orders MODIFY card_number char(50) NULL;
