@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -34,8 +35,28 @@ public class BaseOrderService implements OrderService {
     // 주문 상세 조회
     @Override
     public OrderRead find(Integer id, Integer memberId) {
-        // 값이 있으면 DTO로 변환해서 리턴, 없으면 null 리턴
-        return orderRepository.findByIdAndMemberId(id, memberId).map(Order::toRead).orElse(null);
+        Optional<Order> orderOptional = orderRepository.findByIdAndMemberId(id, memberId);
+
+        if (orderOptional.isPresent()) {
+            // 주문 조회 DTO로 변환
+            OrderRead order = orderOptional.get().toRead();
+
+            // 주문 상품 목록 조회
+            List<OrderItem> orderItems = orderItemService.findAll(order.getId());
+
+            // 주문 상품 목록의 상품 아이디를 추출
+            List<Integer> orderItemIds = orderItems.stream().map(OrderItem::getItemId).toList();
+
+            // 주문 상품 리스트의 상품 ID에 해당하는 상품 목록을 조회
+            List<ItemRead> items = itemService.findAll(orderItemIds);
+
+            // 응답 값에 상품 리스트 데이터를 설정
+            order.setItems(items);
+
+            return order;
+        }
+
+        return null;
     }
 
     // 주문 내용 저장

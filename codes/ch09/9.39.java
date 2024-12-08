@@ -1,13 +1,9 @@
 package kr.co.wikibook.gallery.order.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
-import kr.co.wikibook.gallery.item.dto.ItemRead;
-import kr.co.wikibook.gallery.item.service.ItemService;
 import kr.co.wikibook.gallery.account.helper.AccountHelper;
-import kr.co.wikibook.gallery.order.entity.OrderItem;
 import kr.co.wikibook.gallery.order.dto.OrderRequest;
 import kr.co.wikibook.gallery.order.dto.OrderRead;
-import kr.co.wikibook.gallery.order.service.OrderItemService;
 import kr.co.wikibook.gallery.order.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,10 +17,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class OrderController {
 
-    private final OrderService orderService;
-    private final OrderItemService orderItemService;
-    private final ItemService itemService;
     private final AccountHelper accountHelper;
+    private final OrderService orderService;
 
     @GetMapping("/api/orders")
     public ResponseEntity<?> readAll(HttpServletRequest req) {
@@ -48,18 +42,6 @@ public class OrderController {
         if (order == null) { // 주문 데이터가 없는 경우
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-
-        // 주문 상품 목록 조회
-        List<OrderItem> orderItems = orderItemService.findAll(order.getId());
-
-        // 주문 상품 목록의 상품 아이디를 추출
-        List<Integer> orderItemIds = orderItems.stream().map(OrderItem::getItemId).toList();
-
-        // 주문 상품 리스트의 상품 ID에 해당하는 상품 목록을 조회
-        List<ItemRead> items = itemService.findAll(orderItemIds);
-
-        // 응답 값에 상품 리스트 데이터를 설정
-        order.setItems(items);
 
         return new ResponseEntity<>(order, HttpStatus.OK);
     }
