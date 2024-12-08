@@ -20,7 +20,7 @@ const state = reactive({
 
 // 데이터 제출
 const submit = () => {
-                       // 메모 삽입
+  // 메모 삽입
   storageService.addItem(state.memo);
 
   // 안내 메시지 출력
