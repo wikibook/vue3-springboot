@@ -1,0 +1,1 @@
+import{h as s}from"./index-Dx2Isx7B.js";const a=()=>s.get("/v1/api/cart/items").catch(t=>t.response),c=t=>s.post("/v1/api/carts",{itemId:t}).catch(e=>e.response),o=t=>s.delete(`/v1/api/cart/items/${t}`).catch(e=>e.response);export{c as a,a as g,o as r};
