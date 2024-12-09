@@ -1,0 +1,1 @@
+ALTER TABLE orders MODIFY card_number varchar(50) null comment '카드 번호';
