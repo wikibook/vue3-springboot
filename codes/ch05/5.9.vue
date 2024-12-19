@@ -3,8 +3,8 @@
     <div class="container py-4"> <!-- ①, ② -->
       <!-- 헤더 -->
       <header class="pb-4 mb-4 border-bottom"> <!-- ②, ③, ④ -->
-        <router-link to="/" class="text-dark text-decoration-none"> <!-- ⑥, ⑦ -->
-          <b class="fs-4">Memo Application</b> <!-- ⑤ -->
+        <router-link to="/" class="text-dark text-decoration-none"> <!-- ⑤, ⑥ -->
+          <b class="fs-4">Memo Application</b> <!-- ⑦ -->
         </router-link>
       </header>
       <!-- 메인 -->
